@@ -13,7 +13,7 @@
 
   <body ng-app="myApp">
     <div class="container" ng-controller="messagesController">
-  	<form id='register' action='register.php' method='post' accept-charset='UTF-8'>
+  	<form id='register' onsubmit="form_submit()" method='post' accept-charset='UTF-8'>
 	<input name="name" ng-model="name"/>
 
 		<button type="submit">register</button>
@@ -39,6 +39,24 @@ mysqli_close($con);
 ?>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
     <script src="main.js"></script>
+
+  <script>
+  function form_submit()  
+      {  
+      var inputName = document.querySelector("#register input").value;  
+        console.log(inputName)
+      var xhr;  
+       if (window.XMLHttpRequest) { // Mozilla, Safari, ...  
+          xhr = new XMLHttpRequest();  
+      } else if (window.ActiveXObject) { // IE 8 and older  
+          xhr = new ActiveXObject("Microsoft.XMLHTTP");  
+      }  
+      var data = "name=" + inputName;  
+           xhr.open("POST", "register.php", true);   
+           xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");                    
+           xhr.send(data);  
+      }  
+  </script>
 
   </body>
 
