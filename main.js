@@ -2,9 +2,12 @@ var myApp = angular.module('myApp', []);
 
 myApp.controller('messagesController', function($scope){
 	$scope.postedMessages = {
-		messageOne : 'hello'
-		,messageTwo : 'hello2'
-		,messageThree : 'hello3'
+		a : 'hello'
+		,b : 'hello2'
+		,c : 'hello3'
+		,d  : 'hello4'
+		,e  : 'hello5'
+		,f : 'hello6'
 	};
 
 });

@@ -31,6 +31,28 @@
 		  	'root',
 		  	'root'
 		);
+
+if(! $link )
+{
+  die('Could not connect: ' . mysql_error());
+}
+
+$sql = 'INSERT INTO comments '.
+       '(id,name, date, comment) '.
+       'VALUES ( "' . echo . ", "XYZ", 2000, NOW() )';
+
+mysql_select_db('test_db');
+$retval = mysql_query( $sql, $conn );
+if(! $retval )
+{
+  die('Could not enter data: ' . mysql_error());
+}
+echo "Entered data successfully\n";
+mysql_close($conn);
+
+
+
+
 	?>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
