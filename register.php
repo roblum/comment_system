@@ -13,12 +13,14 @@
 
   <body ng-app="myApp">
     <div class="container" ng-controller="messagesController">
-  	<form id='register' onsubmit="form_submit()" method='post' accept-charset='UTF-8'>
-	<input name="name" ng-model="name"/>
-  <input name="comment" ng-model="comment"/>
 
-		<button type="submit">register</button>
-	</form>
+    	<form id='comment-form' onsubmit="form_submit()" method='post' accept-charset='UTF-8'>
+    	  <input name="name" ng-model="name"/>
+        <textarea name="comment" ng-model="comment"></textarea>
+
+  	    <button type="submit">Submit</button>
+  	  </form>
+
     </div>
 
 <?php
@@ -29,36 +31,34 @@ if (mysqli_connect_errno()) {
   echo "Failed to connect to MySQL: " . mysqli_connect_error();
 }
 
-	$sql = 'INSERT INTO users '.
+	$sqlName = 'INSERT INTO users '.
        '(name) '.
        'VALUES ("' . $_POST["name"] . '")';
 
-       $sql2 = 'INSERT INTO comments '.
+       $sqlComment = 'INSERT INTO comments '.
        '(comment) '.
        'VALUES ("' . $_POST["comment"] . '")';
 
-mysqli_query($con,$sql);
-mysqli_query($con,$sql2);
-echo "success";
+    mysqli_query($con,$sqlName);
+    mysqli_query($con,$sqlComment);
+      echo "success";
 
-mysqli_close($con);
+    mysqli_close($con);
 }
 ?>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
-    <script src="main.js"></script>
 
   <script>
-  function form_submit()
-      {
-      var inputName = document.querySelector("#register input[name=name]").value;
-      var inputComment = document.querySelector("#register input[name=comment]").value;
-        console.log(inputName)
-      var xhr;
-       if (window.XMLHttpRequest) { // Mozilla, Safari, ...
+  function form_submit(){
+      var inputName = document.querySelector("#comment-form input[name=name]").value
+          ,inputComment = document.querySelector("#comment-form textarea[name=comment]").value
+          ,xhr;
+
+        if (window.XMLHttpRequest) { // Mozilla, Safari, ...
           xhr = new XMLHttpRequest();
-      } else if (window.ActiveXObject) { // IE 8 and older
+        } else if (window.ActiveXObject) { // IE 8 and older
           xhr = new ActiveXObject("Microsoft.XMLHTTP");
-      }
+        }
+
       var data = "name=" + inputName + '&comment=' + inputComment;
            xhr.open("POST", "register.php", true);
            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -66,6 +66,8 @@ mysqli_close($con);
       }
   </script>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
+    <script src="main.js"></script>
   </body>
 
 </html>
