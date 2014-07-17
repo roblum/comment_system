@@ -15,6 +15,7 @@
     <div class="container" ng-controller="messagesController">
   	<form id='register' onsubmit="form_submit()" method='post' accept-charset='UTF-8'>
 	<input name="name" ng-model="name"/>
+  <input name="comment" ng-model="comment"/>
 
 		<button type="submit">register</button>
 	</form>
@@ -31,7 +32,13 @@ if (mysqli_connect_errno()) {
 	$sql = 'INSERT INTO users '.
        '(name) '.
        'VALUES ("' . $_POST["name"] . '")';
+
+       $sql2 = 'INSERT INTO comments '.
+       '(comment) '.
+       'VALUES ("' . $_POST["comment"] . '")';
+
 mysqli_query($con,$sql);
+mysqli_query($con,$sql2);
 echo "success";
 
 mysqli_close($con);
@@ -41,21 +48,22 @@ mysqli_close($con);
     <script src="main.js"></script>
 
   <script>
-  function form_submit()  
-      {  
-      var inputName = document.querySelector("#register input").value;  
+  function form_submit()
+      {
+      var inputName = document.querySelector("#register input[name=name]").value;
+      var inputComment = document.querySelector("#register input[name=comment]").value;
         console.log(inputName)
-      var xhr;  
-       if (window.XMLHttpRequest) { // Mozilla, Safari, ...  
-          xhr = new XMLHttpRequest();  
-      } else if (window.ActiveXObject) { // IE 8 and older  
-          xhr = new ActiveXObject("Microsoft.XMLHTTP");  
-      }  
-      var data = "name=" + inputName;  
-           xhr.open("POST", "register.php", true);   
-           xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");                    
-           xhr.send(data);  
-      }  
+      var xhr;
+       if (window.XMLHttpRequest) { // Mozilla, Safari, ...
+          xhr = new XMLHttpRequest();
+      } else if (window.ActiveXObject) { // IE 8 and older
+          xhr = new ActiveXObject("Microsoft.XMLHTTP");
+      }
+      var data = "name=" + inputName + '&comment=' + inputComment;
+           xhr.open("POST", "register.php", true);
+           xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+           xhr.send(data);
+      }
   </script>
 
   </body>
