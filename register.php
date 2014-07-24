@@ -9,6 +9,7 @@
     <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
 
     <title>Responsive Slider</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   </head>
 
   <body ng-app="myApp">
@@ -21,7 +22,7 @@
   	    <button type="submit">Submit</button>
   	  </form>
 
-      <form id='get-user' onsubmit="get_user()" method='get' accept-charset='UTF-8'>
+      <form id='get-user' method='get' accept-charset='UTF-8'>
         <button type="submit">Submit</button>
       </form>
 
@@ -55,6 +56,7 @@ if (mysqli_connect_errno()) {
 if($_GET){
   error_log('get requested');
 }
+error_log(var_dump($_GET));
 ?>
 
   <script>
@@ -75,10 +77,36 @@ if($_GET){
            xhr.send(data);
       }
 
+
+      // function get_user(){
+          
+      //     if (window.XMLHttpRequest) { // Mozilla, Safari, ...
+      //       xhr = new XMLHttpRequest();
+      //     } else if (window.ActiveXObject) { // IE 8 and older
+      //       xhr = new ActiveXObject("Microsoft.XMLHTTP");
+      //     }
+
+      // //var data = "name=" + inputName + '&comment=' + inputComment;
+      //      xhr.open("GET", "register.php", true);
+      //      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      //      xhr.send();   
+      // }
+
+      $(document).ready(function(){
+        
+        $('#get-user').submit(function(){
+          $.get('register.php', function(responseText) {
+            alert(responseText);
+          });
+        });
+
+      });
+
   </script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
     <script src="main.js"></script>
+    
   </body>
 
 </html>
