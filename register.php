@@ -21,29 +21,39 @@
   	    <button type="submit">Submit</button>
   	  </form>
 
+      <form id='get-user' onsubmit="get_user()" method='get' accept-charset='UTF-8'>
+        <button type="submit">Submit</button>
+      </form>
+
     </div>
 
 <?php
 if($_POST){
-$con=mysqli_connect('localhost', 'root', 'root','comment_system');
+$con = new mysqli('localhost', 'root', 'root','comment_system');
 // Check connection
 if (mysqli_connect_errno()) {
   echo "Failed to connect to MySQL: " . mysqli_connect_error();
 }
 
 	$sqlName = 'INSERT INTO users '.
-       '(name) '.
-       'VALUES ("' . $_POST["name"] . '")';
+        '(name) '.
+        'VALUES ("' . $_POST["name"] . '");';
 
-       $sqlComment = 'INSERT INTO comments '.
-       '(comment) '.
-       'VALUES ("' . $_POST["comment"] . '")';
+        $sqlComment = 'INSERT INTO comments (date, comment) VALUES (NOW(),"' . $_POST["comment"] . '");';
 
-    mysqli_query($con,$sqlName);
-    mysqli_query($con,$sqlComment);
+        $query = $sqlName . $sqlComment;
+        error_log($query);
+    
+    $con->multi_query($query);
+    //mysqli_query($con, $query);
+    // mysqli_query($con,$sqlComment);
       echo "success";
 
     mysqli_close($con);
+}
+
+if($_GET){
+  error_log('get requested');
 }
 ?>
 
@@ -64,6 +74,7 @@ if (mysqli_connect_errno()) {
            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
            xhr.send(data);
       }
+
   </script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
