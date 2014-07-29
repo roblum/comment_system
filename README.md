@@ -11,3 +11,5 @@ gmaps - hangout spots
 embedded commenting
 tagging users
 user logins
+horizontal sliding banner/images
+cookies - user info
